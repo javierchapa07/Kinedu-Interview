@@ -1,3 +1,4 @@
+include ':activities'
 include ':api'
 include ':app'
 rootProject.name = "Kinedu Chapa"
