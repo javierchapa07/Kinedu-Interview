@@ -1,7 +1,7 @@
 package com.chapa.kinedu.api.repository
 
 import com.chapa.kinedu.api.dao.ArticleDAO
-import com.chapa.kinedu.api.model.response.ArticleResponse
+import com.chapa.kinedu.api.model.response.ArticleDetailResponse
 import com.chapa.kinedu.api.model.response.ArticleListResponse
 import com.chapa.kinedu.api.service.ArticleService
 import io.reactivex.rxjava3.core.Observable
@@ -19,8 +19,8 @@ class ArticleRepository @Inject constructor(var articleService: ArticleService, 
             }
     }
 
-    fun get(id : Int) : Observable<ArticleResponse> =
-    Observable.create<ArticleResponse> { emitter ->
+    fun get(id : Int) : Observable<ArticleDetailResponse> =
+    Observable.create<ArticleDetailResponse> { emitter ->
         articleService.get(id).subscribe { response ->
             emitter.onNext(response.data)
             emitter.onComplete()
