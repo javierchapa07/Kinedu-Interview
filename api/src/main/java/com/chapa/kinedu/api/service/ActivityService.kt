@@ -1,7 +1,7 @@
 package com.chapa.kinedu.api.service
 
 import com.chapa.kinedu.api.model.response.ActivityListResponse
-import com.chapa.kinedu.api.model.response.ActivityResponse
+import com.chapa.kinedu.api.model.response.ActivityDetailResponse
 import com.chapa.kinedu.api.model.response.Response
 import com.chapa.kinedu.api.util.Constants
 import io.reactivex.rxjava3.core.Observable
@@ -25,5 +25,5 @@ interface ActivityService : IService {
         @Path("activity_id") activityId : Int,
         @Query("baby_id") babyId : Int = 2064732,
         @Query("locale") locale : String = "en") :
-            Observable<Response<ActivityResponse>>
+            Observable<Response<ActivityDetailResponse>>
 }

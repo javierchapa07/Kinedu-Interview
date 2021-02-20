@@ -1,6 +1,6 @@
 package com.chapa.kinedu.api.service
 
-import com.chapa.kinedu.api.model.response.ArticleResponse
+import com.chapa.kinedu.api.model.response.ArticleDetailResponse
 import com.chapa.kinedu.api.model.response.ArticleListResponse
 import com.chapa.kinedu.api.model.response.Response
 import com.chapa.kinedu.api.util.Constants
@@ -23,5 +23,5 @@ interface ArticleService : IService {
     @Headers("Authorization: Token token=${Constants.KINEDU_API_TOKEN}")
     @GET("articles/{article_id}")
     fun get(@Path("activity_id") activityId : Int) :
-            Observable<Response<ArticleResponse>>
+            Observable<Response<ArticleDetailResponse>>
 }

@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.chapa.kinedu.activities.R
+import com.chapa.kinedu.activities.databinding.FragmentActivityDetailBinding
 import com.chapa.kinedu.activities.viewModel.ActivityViewModel
-import com.chapa.kinedu.activity.activities.R
-import com.chapa.kinedu.activity.activities.databinding.FragmentActivityDetailBinding
-import com.chapa.kinedu.api.model.response.ActivityListResponse
+import com.chapa.kinedu.api.model.response.ActivityDetailResponse
 import dagger.android.support.DaggerFragment
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
@@ -20,15 +20,13 @@ class ActivityDetailFragment : DaggerFragment() {
     @Inject
     lateinit var activityViewModel: ActivityViewModel
 
-    private val feedObserver = object : Observer<ActivityListResponse> {
+    private val detailObserver = object : Observer<ActivityDetailResponse> {
         override fun onSubscribe(d: Disposable?) {
             println("")
         }
 
-        override fun onNext(t: ActivityListResponse?) {
-            t?.activities?.forEach {
-                println(it.name)
-            }
+        override fun onNext(t: ActivityDetailResponse?) {
+            println(t?.activity?.name)
         }
 
         override fun onError(e: Throwable?) {
@@ -41,7 +39,7 @@ class ActivityDetailFragment : DaggerFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.fragment_activity_list, container, false)
+        return inflater.inflate(R.layout.fragment_activity_detail, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,7 +49,7 @@ class ActivityDetailFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        activityViewModel.getFeed().subscribe(feedObserver)
+        activityViewModel.getDetail(0).subscribe(detailObserver)
     }
 
     companion object {
