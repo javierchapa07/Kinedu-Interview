@@ -1,4 +1,4 @@
-package com.chapa.kinedu.ui.main
+package com.chapa.kinedu.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.chapa.kinedu.R
+import com.chapa.kinedu.viewModel.PageViewModel
 
 /**
  * A placeholder fragment containing a simple view.
