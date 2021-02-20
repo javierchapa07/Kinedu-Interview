@@ -1,6 +1,7 @@
 package com.chapa.kinedu.activities.viewModel
 
 import androidx.lifecycle.ViewModel
+import com.chapa.kinedu.api.model.response.ActivityDetailResponse
 import com.chapa.kinedu.api.model.response.ActivityListResponse
 import com.chapa.kinedu.api.repository.ActivityRepository
 import io.reactivex.rxjava3.core.Observable
@@ -11,6 +12,13 @@ class ActivityViewModel @Inject constructor(var activityRepository: ActivityRepo
 
     fun getFeed(): Observable<ActivityListResponse> = Observable.create { emitter ->
         activityRepository.getAll().subscribe { response ->
+            emitter.onNext(response)
+            emitter.onComplete()
+        }
+    }
+
+    fun getDetail(id : Int) : Observable<ActivityDetailResponse> = Observable.create { emitter ->
+        activityRepository.get(id).subscribe { response ->
             emitter.onNext(response)
             emitter.onComplete()
         }

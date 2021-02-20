@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.chapa.kinedu.activities.R
+import com.chapa.kinedu.activities.databinding.FragmentActivityListBinding
 import com.chapa.kinedu.activities.viewModel.ActivityViewModel
-import com.chapa.kinedu.activity.activities.R
-import com.chapa.kinedu.activity.activities.databinding.FragmentActivityListBinding
 import com.chapa.kinedu.api.model.response.ActivityListResponse
 import dagger.android.support.DaggerFragment
 import io.reactivex.rxjava3.core.Observer
