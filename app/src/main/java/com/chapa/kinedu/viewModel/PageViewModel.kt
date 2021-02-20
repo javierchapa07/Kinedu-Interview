@@ -1,4 +1,4 @@
-package com.chapa.kinedu.ui.main
+package com.chapa.kinedu.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
