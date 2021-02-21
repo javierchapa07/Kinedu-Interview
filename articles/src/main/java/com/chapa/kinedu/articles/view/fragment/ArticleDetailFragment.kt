@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.chapa.kinedu.articles.viewModel.ArticleViewModel
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.navigation.fragment.findNavController
+import com.chapa.kinedu.api.model.response.ArticleDetailResponse
 import com.chapa.kinedu.articles.R
 import com.chapa.kinedu.articles.databinding.FragmentArticleDetailBinding
-import com.chapa.kinedu.api.model.response.ArticleDetailResponse
+import com.chapa.kinedu.articles.viewModel.ArticleViewModel
 import dagger.android.support.DaggerFragment
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
@@ -22,20 +25,42 @@ class ArticleDetailFragment : DaggerFragment() {
 
     private val detailObserver = object : Observer<ArticleDetailResponse> {
         override fun onSubscribe(d: Disposable?) {
-            println("")
+            requireActivity().runOnUiThread {
+                viewBinding.detail.visibility = View.GONE
+                viewBinding.loader.visibility = View.VISIBLE
+            }
         }
 
         override fun onNext(t: ArticleDetailResponse?) {
-            println(t?.article?.title)
+            requireActivity().runOnUiThread {
+                viewBinding.text.text = t?.article?.title ?: "ERROR"
+            }
         }
 
         override fun onError(e: Throwable?) {
-            println("")
+            requireActivity().runOnUiThread {
+                Toast.makeText(this@ArticleDetailFragment.context, "Hubo un error al cargar el articulo...", Toast.LENGTH_LONG).show()
+            }
         }
 
         override fun onComplete() {
-            println("")
+            requireActivity().runOnUiThread {
+                viewBinding.loader.visibility = View.GONE
+                viewBinding.detail.visibility = View.VISIBLE
+            }
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    this@ArticleDetailFragment.findNavController().popBackStack()
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -49,7 +74,8 @@ class ArticleDetailFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        articleViewModel.getDetail(0).subscribe(detailObserver)
+        val articleId = arguments?.getInt("articleId") ?: 0
+        articleViewModel.getDetail(articleId).subscribe(detailObserver)
     }
 
     companion object {

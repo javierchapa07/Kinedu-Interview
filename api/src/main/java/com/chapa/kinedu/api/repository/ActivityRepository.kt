@@ -1,8 +1,8 @@
 package com.chapa.kinedu.api.repository
 
 import com.chapa.kinedu.api.dao.ActivityDAO
-import com.chapa.kinedu.api.model.response.ActivityListResponse
 import com.chapa.kinedu.api.model.response.ActivityDetailResponse
+import com.chapa.kinedu.api.model.response.ActivityListResponse
 import com.chapa.kinedu.api.service.ActivityService
 import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject

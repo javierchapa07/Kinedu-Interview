@@ -1,8 +1,8 @@
 package com.chapa.kinedu.articles.viewModel
 
 import androidx.lifecycle.ViewModel
-import com.chapa.kinedu.api.model.response.ArticleListResponse
 import com.chapa.kinedu.api.model.response.ArticleDetailResponse
+import com.chapa.kinedu.api.model.response.ArticleListResponse
 import com.chapa.kinedu.api.repository.ArticleRepository
 import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject

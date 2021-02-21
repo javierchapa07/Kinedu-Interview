@@ -2,8 +2,8 @@ package com.chapa.kinedu.di
 
 import com.chapa.kinedu.MyApplication
 import com.chapa.kinedu.activities.di.ActivityViewModelModule
-import com.chapa.kinedu.api.di.RepositoryModule
 import com.chapa.kinedu.api.di.NetworkModule
+import com.chapa.kinedu.api.di.RepositoryModule
 import com.chapa.kinedu.api.di.SourceModule
 import dagger.BindsInstance
 import dagger.Component

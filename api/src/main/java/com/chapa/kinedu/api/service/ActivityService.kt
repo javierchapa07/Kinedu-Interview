@@ -1,7 +1,7 @@
 package com.chapa.kinedu.api.service
 
-import com.chapa.kinedu.api.model.response.ActivityListResponse
 import com.chapa.kinedu.api.model.response.ActivityDetailResponse
+import com.chapa.kinedu.api.model.response.ActivityListResponse
 import com.chapa.kinedu.api.model.response.Response
 import com.chapa.kinedu.api.util.Constants
 import io.reactivex.rxjava3.core.Observable

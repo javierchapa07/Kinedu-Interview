@@ -22,6 +22,6 @@ interface ArticleService : IService {
 
     @Headers("Authorization: Token token=${Constants.KINEDU_API_TOKEN}")
     @GET("articles/{article_id}")
-    fun get(@Path("activity_id") activityId : Int) :
+    fun get(@Path("article_id") articleId : Int) :
             Observable<Response<ArticleDetailResponse>>
 }

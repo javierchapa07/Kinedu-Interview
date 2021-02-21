@@ -3,9 +3,9 @@ package com.chapa.kinedu.di
 import com.chapa.kinedu.activities.di.ActivityViewModelModule
 import com.chapa.kinedu.activities.view.fragment.ActivityDetailFragment
 import com.chapa.kinedu.activities.view.fragment.ActivityListFragment
-import com.chapa.kinedu.articles.view.fragment.ArticleListFragment
 import com.chapa.kinedu.articles.di.ArticleViewModelModule
 import com.chapa.kinedu.articles.view.fragment.ArticleDetailFragment
+import com.chapa.kinedu.articles.view.fragment.ArticleListFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

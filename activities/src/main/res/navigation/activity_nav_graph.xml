@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_nav_graph"
+    app:startDestination="@id/activityListFragment">
+    <fragment
+        android:id="@+id/activityListFragment"
+        android:name="com.chapa.kinedu.activities.view.fragment.ActivityListFragment"
+        android:label="ActivityListFragment" >
+        <action
+            android:id="@+id/action_activityListFragment_to_activityDetailFragment"
+            app:destination="@id/activityDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/activityDetailFragment"
+        android:name="com.chapa.kinedu.activities.view.fragment.ActivityDetailFragment"
+        android:label="ActivityDetailFragment" />
+</navigation>

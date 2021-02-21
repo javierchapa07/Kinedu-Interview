@@ -2,42 +2,28 @@ package com.chapa.kinedu.view.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewpager.widget.ViewPager
 import com.chapa.kinedu.databinding.ActivityMainBinding
-import com.chapa.kinedu.api.model.response.ActivityListResponse
-import com.chapa.kinedu.api.model.response.ArticleListResponse
-import com.chapa.kinedu.view.util.SectionsPagerAdapter
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.tabs.TabLayout
-import com.xwray.groupie.GroupieAdapter
-import dagger.android.support.DaggerAppCompatActivity
-import io.reactivex.rxjava3.core.Observer
-import io.reactivex.rxjava3.disposables.Disposable
-import javax.inject.Inject
+import com.chapa.kinedu.view.adapter.SectionsPagerAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
-    private lateinit var groupAdapter: GroupieAdapter
+    private lateinit var viewBinding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        viewBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(viewBinding.root)
 
-        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
-        val viewPager: ViewPager = binding.viewPager
-        viewPager.adapter = sectionsPagerAdapter
-        val tabs: TabLayout = binding.tabs
-        tabs.setupWithViewPager(viewPager)
-        val fab: FloatingActionButton = binding.fab
+        viewBinding.viewPager.adapter = SectionsPagerAdapter(this)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
+        TabLayoutMediator(viewBinding.tabs, viewBinding.viewPager) { tab, position ->
+            tab.text = pageTitles[position]
+        }.attach()
+    }
 
+    companion object {
+        val pageTitles = arrayOf("Articulos", "Actividades")
     }
 }
