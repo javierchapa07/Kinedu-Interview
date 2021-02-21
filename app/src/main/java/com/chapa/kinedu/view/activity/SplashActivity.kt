@@ -10,6 +10,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.lang.Exception
 
 class SplashActivity : AppCompatActivity() {
@@ -28,7 +29,7 @@ class SplashActivity : AppCompatActivity() {
                 viewBinding.logo.animate().setDuration(3000).alpha(1f).start()
             }
 
-            override fun onError(e: Exception?) {}
+            override fun onError(e: Exception?) { Timber.e(e) }
         })
 
         GlobalScope.launch {
@@ -37,6 +38,8 @@ class SplashActivity : AppCompatActivity() {
             val intent = Intent(this@SplashActivity, MainActivity::class.java)
             startActivity(intent)
         }
+
+        Timber.i("Termina de iniciar splash activity")
     }
 
     override fun finish() {

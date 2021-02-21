@@ -20,6 +20,7 @@ import com.squareup.picasso.Picasso
 import dagger.android.support.DaggerFragment
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -82,11 +83,8 @@ class ArticleDetailFragment : DaggerFragment() {
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        Timber.i("Se crea vista de detalle de articulo")
         return inflater.inflate(R.layout.fragment_article_detail, container, false)
     }
 

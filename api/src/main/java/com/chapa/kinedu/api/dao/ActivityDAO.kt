@@ -1,4 +1,4 @@
 package com.chapa.kinedu.api.dao
 
-class ActivityDAO {
-}
+//TODO: implementar logica de guardado local con room
+class ActivityDAO

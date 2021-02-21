@@ -16,6 +16,7 @@ import com.xwray.groupie.GroupieAdapter
 import dagger.android.support.DaggerFragment
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
+import timber.log.Timber
 import javax.inject.Inject
 
 class ArticleListFragment : DaggerFragment() {
@@ -63,6 +64,7 @@ class ArticleListFragment : DaggerFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        Timber.i("Se crea vista de lista de articulos")
         return inflater.inflate(R.layout.fragment_article_list, container, false)
     }
 

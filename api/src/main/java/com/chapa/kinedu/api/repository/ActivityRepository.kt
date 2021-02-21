@@ -5,6 +5,7 @@ import com.chapa.kinedu.api.model.response.ActivityDetailResponse
 import com.chapa.kinedu.api.model.response.ActivityListResponse
 import com.chapa.kinedu.api.service.ActivityService
 import io.reactivex.rxjava3.core.Observable
+import timber.log.Timber
 import javax.inject.Inject
 
 class ActivityRepository @Inject constructor(var activityService: ActivityService, var activityDAO: ActivityDAO) : IRepository {
@@ -12,18 +13,20 @@ class ActivityRepository @Inject constructor(var activityService: ActivityServic
     //TODO: implementar logica de guardado local con room
 
     fun getAll() : Observable<ActivityListResponse> =
-        Observable.create<ActivityListResponse> { emitter ->
+        Observable.create { emitter ->
             activityService.getList().subscribe { response ->
                 emitter.onNext(response.data)
                 emitter.onComplete()
+                Timber.i("Se obtiene lista de actividades")
             }
         }
 
     fun get(id : Int) : Observable<ActivityDetailResponse> =
-        Observable.create<ActivityDetailResponse> { emitter ->
+        Observable.create { emitter ->
             activityService.get(id).subscribe { response ->
                 emitter.onNext(response.data)
                 emitter.onComplete()
+                Timber.i("Se obtiene detalle de actividad")
             }
         }
 }
