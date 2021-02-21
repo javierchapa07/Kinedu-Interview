@@ -1,9 +1,14 @@
 package com.chapa.kinedu.articles.view.fragment
 
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebSettings
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
@@ -11,10 +16,12 @@ import com.chapa.kinedu.api.model.response.ArticleDetailResponse
 import com.chapa.kinedu.articles.R
 import com.chapa.kinedu.articles.databinding.FragmentArticleDetailBinding
 import com.chapa.kinedu.articles.viewModel.ArticleViewModel
+import com.squareup.picasso.Picasso
 import dagger.android.support.DaggerFragment
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import javax.inject.Inject
+
 
 class ArticleDetailFragment : DaggerFragment() {
 
@@ -33,13 +40,25 @@ class ArticleDetailFragment : DaggerFragment() {
 
         override fun onNext(t: ArticleDetailResponse?) {
             requireActivity().runOnUiThread {
-                viewBinding.text.text = t?.article?.title ?: "ERROR"
+                val article = t?.article!!
+                Picasso.get().load(article.picture).into(viewBinding.picture)
+                viewBinding.title.text = article.title
+                viewBinding.htmlBody.loadData(article.body, "text/html", "UTF-8")
+                viewBinding.blogLink.setOnClickListener {
+                    val intent = Intent(Intent.ACTION_VIEW)
+                    intent.data = Uri.parse(article.link)
+                    startActivity(intent)
+                }
             }
         }
 
         override fun onError(e: Throwable?) {
             requireActivity().runOnUiThread {
-                Toast.makeText(this@ArticleDetailFragment.context, "Hubo un error al cargar el articulo...", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this@ArticleDetailFragment.context,
+                    "Hubo un error al cargar el articulo...",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
 
@@ -63,13 +82,25 @@ class ArticleDetailFragment : DaggerFragment() {
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         return inflater.inflate(R.layout.fragment_article_detail, container, false)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewBinding = FragmentArticleDetailBinding.bind(view)
+
+        viewBinding.htmlBody.isVerticalScrollBarEnabled = false
+        viewBinding.htmlBody.isHorizontalScrollBarEnabled = false
+        viewBinding.htmlBody.settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
+        viewBinding.htmlBody.setOnTouchListener { v, event ->
+            event.action == MotionEvent.ACTION_MOVE
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

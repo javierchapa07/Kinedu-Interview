@@ -7,13 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".view.fragment.ActivityListFragment">
 
-    <androidx.core.widget.ContentLoadingProgressBar
-        android:id="@+id/loader"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+    <com.wang.avi.AVLoadingIndicatorView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:visibility="gone"
+        android:id="@+id/loader"
+        app:indicator="BallGridPulse"
+        app:indicator_color="#F9BA48"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,9 +1,11 @@
 package com.chapa.kinedu.activities.view.fragment
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.MediaController
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
@@ -16,12 +18,15 @@ import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import javax.inject.Inject
 
-class ActivityDetailFragment : DaggerFragment() {
 
-    lateinit var viewBinding: FragmentActivityDetailBinding
+class ActivityDetailFragment : DaggerFragment() {
 
     @Inject
     lateinit var activityViewModel: ActivityViewModel
+
+    private lateinit var viewBinding: FragmentActivityDetailBinding
+
+    private lateinit var mediaController: MediaController
 
     private val detailObserver = object : Observer<ActivityDetailResponse> {
         override fun onSubscribe(d: Disposable?) {
@@ -33,13 +38,22 @@ class ActivityDetailFragment : DaggerFragment() {
 
         override fun onNext(t: ActivityDetailResponse?) {
             requireActivity().runOnUiThread {
-                viewBinding.text.text = t?.activity?.name ?: "ERROR"
+                val activity = t?.activity!!
+                viewBinding.name.text = activity.name
+                viewBinding.purpose.text = activity.purpose
+                viewBinding.description.text = activity.description
+                viewBinding.videoPlayer.setVideoURI(Uri.parse(activity.shareableVideoUrl))
+                viewBinding.videoPlayer.seekTo(1)
             }
         }
 
         override fun onError(e: Throwable?) {
             requireActivity().runOnUiThread {
-                Toast.makeText(this@ActivityDetailFragment.context, "Hubo un error al cargar la actividad...", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this@ActivityDetailFragment.context,
+                    "Hubo un error al cargar la actividad...",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
 
@@ -63,13 +77,20 @@ class ActivityDetailFragment : DaggerFragment() {
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         return inflater.inflate(R.layout.fragment_activity_detail, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewBinding = FragmentActivityDetailBinding.bind(view)
+        mediaController = MediaController(this@ActivityDetailFragment.requireContext())
+        mediaController.setMediaPlayer(viewBinding.videoPlayer)
+        viewBinding.videoPlayer.setMediaController(mediaController)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

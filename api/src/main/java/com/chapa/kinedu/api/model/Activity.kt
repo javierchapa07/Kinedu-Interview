@@ -7,7 +7,7 @@ data class Activity (
     var id : Int = 0,
     var name : String = "",
     var age : Int = 0,
-    @SerializedName("age_group") var AgeGroup : String = "",
+    @SerializedName("age_group") var ageGroup : String = "",
     @SerializedName("materials_description") var materialsDescription : Any? = null,
     @SerializedName("activity_type") var activityType : String = "",
     @SerializedName("embed_code") var embedCode : String = "",
